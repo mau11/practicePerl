@@ -1,0 +1,90 @@
+# Perl Programming/Exercise 1
+#!/usr/bin/perl
+
+
+## Task: Create a Perl program which displays "Hello world" and then exits.
+print "Hello world";
+print "\n";
+
+
+## Displaying numbers
+# Put the number 4000/7 into a variable, and display it on screen.
+my $value = 4000/7;
+print "Result of 4000 divided by 7 is $value";
+print "\n";
+
+# Adapt the program to display the number to 3 decimal places. (Hint: The well-known printf works in Perl!)
+printf "$value rounded to 3 decimal places is %.3f", $value;
+print "\n";
+
+# Adapt the program to round up if the last decimal place is greater than 5
+use POSIX;
+my $floor = floor( $value );
+my $ceil = ceil( $value );
+my $num = $value - $floor;
+my $newValue;
+
+$num < 0.5 ? ( $newValue = $floor ) : ( $newValue = $ceil );
+
+print "$value rounded to a whole number is $newValue";
+print "\n";
+
+# Adapt the program to display the number with leading zeros
+my $zeros = 2;
+my $newNum = '0' x $zeros . $value;
+
+print "The number $value with $zeros leading zeros is $newNum";
+print "\n";
+
+# Adapt the program to show a + sign if the number is positive, and check that it correctly displays a - sign if you subtract 1000 from the number.
+my $sign;
+$value > 1 ? ( $sign = '+' ) : ( $sign = '-' );
+
+print $sign . $value;
+print "\n";
+
+
+## Functions
+# Write a function to calculate the roots of a Quadratic equation, where you give the coefficients a,b,c to the function, and it returns both the values of x
+# ( -b +/- sqrt( b^2 - 4ac ) )/ 2a
+sub quad {
+    my ( $a, $b, $c ) = @_;
+
+    if ( $a == 0 ){
+        print "The value of 'a' cannot be zero, please try again \n";
+    } else {
+        my $x1 = ( -$b + ( $b**2 - ( 4 * $a * $c ) )**0.5 ) / ( 2 * $a );
+        my $x2 = ( -$b - ( $b**2 - ( 4 * $a * $c ) )**0.5 ) / ( 2 * $a );
+        if ( $x1 eq nan || $x2 eq nan ) {
+            print "Not a valid quadratic equation, please try again \n";
+        } else {
+            print "The result is: $x1 and $x2 \n";
+        }
+    }
+}
+print "\n";
+
+## Putting it all together
+# Put together these programs into one which:
+# Displays a title on screen
+# Creates 3 random numbers (a,b,c)
+# Displays those numbers neatly formatted
+# Uses those numbers as the coefficients of a quadratic equation, calculates and displays both roots.
+print "Using the quadratic equation with 3 random numbers \n";
+print "Hint: x^2 - 2x - 3 is a quadratic equation. \n";
+print "\n";
+
+print "Enter a value for 'a': ";
+$a = <STDIN>;
+print "\n";
+
+print "Enter a value for 'b': ";
+$b = <STDIN>;
+print "\n";
+
+print "Enter a value for 'c': ";
+$c = <STDIN>;
+print "\n";
+
+quad( $a, $b, $c );
+print "\n";
